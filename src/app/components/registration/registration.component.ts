@@ -17,10 +17,15 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.userList = USERS;
-    this.newUser = this.userList[0];
+    this.newUser = { username: '', email: '', password: '', role: false };
   }
 
-  onRegister(): void {
+  onRegister(username: string): void {
+    this.newUser.username = username;
+    this.newUser.email = username;
+    this.newUser.password = username;
+    this.newUser.role = false;
+
     let userString: string = '[';
     userString += this.newUser.username + ', ';
     userString += this.newUser.email + ', ';

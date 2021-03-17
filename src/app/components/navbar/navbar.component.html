@@ -1,9 +1,10 @@
 <!-- As a link -->
 <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="/home">HOME</a>
+    <a class="navbar-brand" [routerLink]="['/home']">HOME</a>
     <form class="form-inline">
         <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-        <button class="btn btn-outline-info my-2 my-sm-0" type="success">Login</button>
+        <button class="btn btn-outline-info my-2 my-sm-1 mr-1" type="success" [routerLink]="['/register']">Sign Up</button>
+        <button class="btn btn-outline-info my-2 my-sm-0" type="success" [routerLink]="['/login']">Login</button>
     </form>
 </nav>
 
