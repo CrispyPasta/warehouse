@@ -7,33 +7,36 @@
 </div> -->
 
 <div class="jumbotron">
-    <form>
+    <form (ngSubmit)="onRegister()" #registrationForm="ngForm" (change)="validateForm()">
         <div class="form-group">
             <label for="newUserEmail">Email address</label>
             <input type="email" class="form-control" id="newUserEmail" aria-describedby="emailHelp"
-                placeholder="Enter email">
+            placeholder="Enter email" [(ngModel)]="newUser.email" name="newUserEmail" required
+            pattern="^[a-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,4}">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
         <div class="form-group">
             <label for="newUsername">Username</label>
             <input type="text" class="form-control" id="newUsername" aria-describedby="usernameHelp"
-                placeholder="Enter a username">
+            placeholder="Enter a username" [(ngModel)]="newUser.username" name="newUsername" required>
             <small id="usernameHelp" class="form-text text-muted">Your username can be whatever you want.</small>
         </div>
 
         <div class="form-group">
             <label for="newUserPassword">Password</label>
-            <input type="password" class="form-control" id="newUserPassword" placeholder="Enter new password">
+            <input type="password" class="form-control" id="newUserPassword" placeholder="Enter new password" 
+            [(ngModel)]="newUser.password" name="newUserPassword" (input)="comparePasswords()" required>
             <small id="passwordHelp" class="form-text text-muted">Ensure the password has at least one number and one capital letter
                 and that it is more than 8 characters long.
             </small>
         </div>
-
+<!-- pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}" -->
         <div class="form-group">
             <label for="newUserConfirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="newUserConfirmPassword" placeholder="Enter new password">
-            <small id="passwordHelp" class="form-text text-muted">Re-type your password.
+            <input type="password" class="form-control" id="newUserConfirmPassword" placeholder="Re-type your password."
+             [(ngModel)]="confirmPassword" name="newUserConfirmPassword" (input)="comparePasswords()" required>
+            <small id="passwordHelp" class="form-text text-muted" *ngIf="!passwordsMatch">Passwords don't match.
             </small>
         </div>
 
@@ -43,17 +46,28 @@
             <small id="adminHelp" class="form-text text-muted">Check this box if the user is an administrator.</small>
         </div> -->
 
-        <div class="dropdown">
+        <!-- <div class="form-group">
             <label for="adminDropdown">Pick User Role:</label>
             <button class="btn btn-secondary dropdown-toggle my-4 ml-3" type="button" id="adminDropdown" 
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User Role</button>
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" name="dropdownButton">{{dropdownString}}</button>
 
             <div class="dropdown-menu" >
-                <a class="dropdown-item">Administrator</a>
-                <a class="dropdown-item">Cashier</a>
+                <button class="dropdown-item" type="button" (click)="newUser.role = true; dropdownString = 'Administrator'">Administrator</button>
+                <button class="dropdown-item" type="button" (click)="newUser.role = false; dropdownString = 'Cashier'">Cashier</button>
             </div>
+        </div> -->
+
+        <div class="form-group">
+            <label for="newUser.role">User Role</label>
+            <select class="form-control" id="rolePicker" required [(ngModel)]="dropdownString" name="rolePicker">
+                <option>Administrator</option>
+                <option>Cashier</option>
+            </select>
         </div>
 
-        <button type="submit" class="btn btn-info btn-lg" (click)="onRegister('asdsdsd')">Register</button>
+        <button type="submit" class="btn btn-info btn-lg" [disabled]="!formValid">Register</button>
+        <!-- this button shouldn't have an event, it should be on the form -->
+        <!-- Done. The onRegister() is now called by the form and not in the button -->
+
     </form>
 </div>
