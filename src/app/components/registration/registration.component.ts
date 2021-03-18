@@ -63,6 +63,14 @@ export class RegistrationComponent implements OnInit {
       return "No user role chosen. Please choose a role and try again.";
     }
 
+    if (!this.validateEmail()){
+      return "Email address is invalid. Please enter a valid address.";
+    }
+
+    if (!this.validateUsername()){
+      return "Username is invalid. Please enter a valid username.";
+    }
+
     this.formValid = true;
     return true;
   }
@@ -96,6 +104,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   validateEmail(): boolean{
+    //apply same validation rule here as on the page?
     return true;
   }
 

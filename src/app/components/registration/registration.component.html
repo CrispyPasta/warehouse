@@ -10,23 +10,25 @@
     <form (ngSubmit)="onRegister()" #registrationForm="ngForm" (change)="validateForm()">
         <div class="form-group">
             <label for="newUserEmail">Email address</label>
-            <input type="email" class="form-control" id="newUserEmail" aria-describedby="emailHelp"
+            <input type="email" class="form-control" id="newUserEmail" #emailAddress="ngModel"
             placeholder="Enter email" [(ngModel)]="newUser.email" name="newUserEmail" required
-            pattern="^[a-z0-9._-]+@[a-z0-9.-]+\\.[a-z]{2,4}">
+            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}"  [class.is-invalid]="emailAddress.invalid">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
         <div class="form-group">
             <label for="newUsername">Username</label>
-            <input type="text" class="form-control" id="newUsername" aria-describedby="usernameHelp"
-            placeholder="Enter a username" [(ngModel)]="newUser.username" name="newUsername" required>
+            <input type="text" class="form-control" id="newUsername" #username="ngModel"
+            placeholder="Enter a username" [(ngModel)]="newUser.username" name="newUsername" required
+            pattern="^[a-z0-9._%+-]{6,18}" [class.is-invalid]="username.invalid">
             <small id="usernameHelp" class="form-text text-muted">Your username can be whatever you want.</small>
         </div>
 
         <div class="form-group">
             <label for="newUserPassword">Password</label>
             <input type="password" class="form-control" id="newUserPassword" placeholder="Enter new password" 
-            [(ngModel)]="newUser.password" name="newUserPassword" (input)="comparePasswords()" required>
+            [(ngModel)]="newUser.password" name="newUserPassword" (input)="comparePasswords()" required
+            #password1="ngModel" [class.is-invalid]="password1.invalid" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}">
             <small id="passwordHelp" class="form-text text-muted">Ensure the password has at least one number and one capital letter
                 and that it is more than 8 characters long.
             </small>
@@ -35,7 +37,8 @@
         <div class="form-group">
             <label for="newUserConfirmPassword">Confirm Password</label>
             <input type="password" class="form-control" id="newUserConfirmPassword" placeholder="Re-type your password."
-             [(ngModel)]="confirmPassword" name="newUserConfirmPassword" (input)="comparePasswords()" required>
+             [(ngModel)]="confirmPassword" name="newUserConfirmPassword" (input)="comparePasswords()" required
+             #password2="ngModel" [class.is-invalid]="password2.invalid" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}">
             <small id="passwordHelp" class="form-text text-muted" *ngIf="!passwordsMatch">Passwords don't match.
             </small>
         </div>
