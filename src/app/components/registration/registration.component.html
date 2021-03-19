@@ -10,25 +10,31 @@
     <form (ngSubmit)="onRegister()" #registrationForm="ngForm" (change)="validateForm()">
         <div class="form-group">
             <label for="newUserEmail">Email address</label>
-            <input type="email" class="form-control" id="newUserEmail" #emailAddress="ngModel"
-            placeholder="Enter email" [(ngModel)]="newUser.email" name="newUserEmail" required
-            pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}"  [class.is-invalid]="emailAddress.invalid">
+
+            <input type="email" class="form-control" id="newUserEmail" name="newUserEmail" placeholder="Enter email" 
+            [(ngModel)]="newUser.email" #emailAddress="ngModel" required
+            [pattern]="emailPattern"  [class.is-invalid]="emailAddress.invalid && emailAddress.dirty">
+
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
 
         <div class="form-group">
             <label for="newUsername">Username</label>
-            <input type="text" class="form-control" id="newUsername" #username="ngModel"
-            placeholder="Enter a username" [(ngModel)]="newUser.username" name="newUsername" required
-            pattern="^[a-z0-9._%+-]{6,18}" [class.is-invalid]="username.invalid">
+
+            <input type="text" class="form-control" id="newUsername" name="newUsername" placeholder="Enter a username" 
+            [(ngModel)]="newUser.username" #username="ngModel" required
+            [pattern]="usernamePattern" [class.is-invalid]="username.invalid && username.dirty">
+
             <small id="usernameHelp" class="form-text text-muted">Your username can be whatever you want.</small>
         </div>
 
         <div class="form-group">
             <label for="newUserPassword">Password</label>
-            <input type="password" class="form-control" id="newUserPassword" placeholder="Enter new password" 
-            [(ngModel)]="newUser.password" name="newUserPassword" (input)="comparePasswords()" required
-            #password1="ngModel" [class.is-invalid]="password1.invalid" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}">
+
+            <input type="password" class="form-control" id="newUserPassword" name="newUserPassword" placeholder="Enter new password" 
+            [(ngModel)]="newUser.password" #password1="ngModel" (input)="comparePasswords()" required
+            [pattern]="passwordPattern" [class.is-invalid]="password1.invalid && password1.dirty">
+
             <small id="passwordHelp" class="form-text text-muted">Ensure the password has at least one number and one capital letter
                 and that it is more than 8 characters long.
             </small>
@@ -36,9 +42,11 @@
 <!-- pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}" -->
         <div class="form-group">
             <label for="newUserConfirmPassword">Confirm Password</label>
-            <input type="password" class="form-control" id="newUserConfirmPassword" placeholder="Re-type your password."
-             [(ngModel)]="confirmPassword" name="newUserConfirmPassword" (input)="comparePasswords()" required
-             #password2="ngModel" [class.is-invalid]="password2.invalid" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}">
+
+            <input type="password" class="form-control" id="newUserConfirmPassword" name="newUserConfirmPassword" placeholder="Re-type your password."
+            [(ngModel)]="confirmPassword" #password2="ngModel" (input)="comparePasswords()" required
+            [pattern]="passwordPattern" [class.is-invalid]="password2.invalid && password2.dirty">
+
             <small id="passwordHelp" class="form-text text-muted" *ngIf="!passwordsMatch">Passwords don't match.
             </small>
         </div>

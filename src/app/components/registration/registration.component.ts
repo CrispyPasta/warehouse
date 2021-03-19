@@ -10,18 +10,22 @@ import { USERS } from '../mock-users';
 export class RegistrationComponent implements OnInit {
 
   // custom type property to capture user reg info
-  newUser: User;
-  userList: User[];
-  confirmPassword?: string;
+  newUser: User = { username: '', email: '', password: '', role: false };
+
+  confirmPassword: string;
   passwordsMatch: boolean = true;
   formValid: boolean = false;
+  emailValid: boolean = false;
+
   dropdownString: string = "User Role";
+  passwordPattern: string = "(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}";
+  usernamePattern: string = "^[a-z0-9._%+-]{6,18}";
+  emailPattern: string = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}";
+  roleStrings: string[] = ["Administrator", "Cashier"];
 
   constructor() { }
 
   ngOnInit(): void {
-    this.userList = USERS;
-    this.newUser = { username: '', email: '', password: '', role: false };
   }
 
   onRegister(): void {
@@ -33,20 +37,6 @@ export class RegistrationComponent implements OnInit {
         alert(validation);
         return;
     }
-    //   userString += '[';
-    //   userString += this.newUser.username + ', ';
-    //   userString += this.newUser.email + ', ';
-    //   userString += this.newUser.password + ', ';
-    //   if (this.newUser.role){
-    //     userString += 'Admin]';
-    //   } else {
-    //     userString += 'Cashier';
-    //     userString += ']';
-    //   }
-    // } else {
-    //   userString = "Passwords don't match. Please re-type them and ensure they are the same.";
-    // }
-
 
     console.log(this.newUser);
   }
@@ -56,7 +46,7 @@ export class RegistrationComponent implements OnInit {
     this.setUserRole();
 
     if(!this.comparePasswords()) {
-      return "Passwords don't match.Please re-type them and ensure they are the same.";
+      return "Passwords don't match. Please re-type them and ensure they are the same.";
     }
 
     if (!this.validateRole()){
@@ -86,17 +76,18 @@ export class RegistrationComponent implements OnInit {
   } 
 
   validateRole(): boolean{
-    if (this.dropdownString === "User Role"){
-      return false;
+    if (this.roleStrings.find(element => element === this.dropdownString)){
+      return true;
     }
-
-    return true;
+    return false;
   }
 
   setUserRole(): void{
-    if (this.dropdownString === "Administrator"){
+    if (this.dropdownString === this.roleStrings[0]){
       this.newUser.role = true;
-    } 
+    } else {
+      this.newUser.role = false;
+    }
   }
 
   validateUsername(): boolean{

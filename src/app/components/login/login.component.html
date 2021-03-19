@@ -1,3 +1,35 @@
+<!-- <div class="jumbotron">
+    <h2>Username: {{newUser.username}}</h2>
+    <h2>Email: {{newUser.email}}</h2>
+    <h2>Password: {{newUser.password}}</h2>
+    <h2>Role: {{newUser.role}}</h2>
+    <button class="btn btn-info" (click)="onRegister()">Register</button>
+</div> -->
+
 <div class="jumbotron">
-    <h1>This is the login page</h1>
+    <form (ngSubmit)="onLogin()" #registrationForm="ngForm">
+
+        <div class="form-group w-40 mx-auto">
+            <label for="newUsername">Username</label>
+
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username"
+                [(ngModel)]="user.username" #username="ngModel" required [pattern]="usernamePattern"
+                [class.is-invalid]="username.invalid && username.dirty">
+        </div>
+
+        <div class="form-group w-40 mx-auto">
+            <label for="newUserPassword">Password</label>
+
+            <input type="password" class="form-control" id="userPassword" name="userPassword" placeholder="Enter your password"
+                [(ngModel)]="user.password" #password1="ngModel"required [pattern]="passwordPattern"
+                [class.is-invalid]="password1.invalid && password1.dirty">
+        </div>
+
+        <div class="text-center">
+            <button type="login" class="btn btn-info btn-lg" [disabled]="username.invalid || password1.invalid">Login</button>
+        </div>
+        <!-- this button shouldn't have an event, it should be on the form -->
+        <!-- Done. The onRegister() is now called by the form and not in the button -->
+
+    </form>
 </div>
